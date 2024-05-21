@@ -1,0 +1,530 @@
+{
+	"info": {
+		"_postman_id": "2d273be6-2f68-4a3a-9e6d-2ded0daf3da8",
+		"name": "Demo APIs",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "13262524",
+		"_collection_link": "https://speeding-desert-88730.postman.co/workspace/QA-Team~7e012b3f-47b7-44ee-882f-8ae6abab8017/collection/13262524-2d273be6-2f68-4a3a-9e6d-2ded0daf3da8?action=share&source=collection_link&creator=13262524"
+	},
+	"item": [
+		{
+			"name": "Registration",
+			"item": [
+				{
+					"name": "Register Successfully",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"eve.holt@reqres.in\",\r\n    \"password\": \"pistol\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Domain}}/api/register",
+							"host": [
+								"{{Domain}}"
+							],
+							"path": [
+								"api",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register Unsuccessfully",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"sydney@fife\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Domain}}/api/register",
+							"host": [
+								"{{Domain}}"
+							],
+							"path": [
+								"api",
+								"register"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Login",
+			"item": [
+				{
+					"name": "login successfully",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"console.log(pm.globals.get(\"loginVar\"));\r",
+									"console.log(pm.globals.get(\"global var\"));\r",
+									"\r",
+									"pm.globals.unset(\"globalvar\");\r",
+									"pm.variables.unset(\"loginVar\");\r",
+									"pm.environment.unset(\"env scope variable\")"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.globals.set(\"loginVar\",\"login\");"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"eve.holt@reqres.in\",\r\n    \"password\": \"cityslicka\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Domain}}/api/{{loginVar}}",
+							"host": [
+								"{{Domain}}"
+							],
+							"path": [
+								"api",
+								"{{loginVar}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login unsuccessfully",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"peter@klaven\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Domain}}/api/login",
+							"host": [
+								"{{Domain}}"
+							],
+							"path": [
+								"api",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "List Users",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.variables.set(\"userNum\",\"page=2\")"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status is\",function(){\r",
+							"    pm.response.to.have.status(\"OK\")\r",
+							"})\r",
+							"\r",
+							"console.log(\"Log my results\");\r",
+							"\r",
+							"let jsonDat=pm.response.json();\r",
+							"console.log( typeof jsonDat.data);\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/xml"
+					},
+					{
+						"key": "token",
+						"value": "3874747474"
+					}
+				],
+				"url": {
+					"raw": "{{Domain}}/api/users?page=2",
+					"host": [
+						"{{Domain}}"
+					],
+					"path": [
+						"api",
+						"users"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "single User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let jsonDat=pm.response.json();\r",
+							"console.log( typeof jsonDat.data.id);\r",
+							"\r",
+							"pm.test(\"Verify the id Value\",function(){\r",
+							"    pm.expect(jsonDat.data.id).to.eql(2);\r",
+							"})\r",
+							"pm.test(\"Test Status code\",function(){\r",
+							"    pm.response.to.be.ok;\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Test Response jason\",function(){\r",
+							"    pm.response.to.be.json;\r",
+							"\r",
+							"})\r",
+							"let fn=pm.response.json();\r",
+							"pm.test(\"Verify First Name\",function(){\r",
+							"    pm.expect(jsonDat.data.first_name).to.eql(\"Janet\");\r",
+							"})\r",
+							"\r",
+							"let Ln=pm.response.json();\r",
+							"pm.test(\"Verify Last Name\",function(){\r",
+							"    pm.expect(Ln.data.last_name).to.eql(\"Weaver\");\r",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{Domain}}/api/users/{{CollectionCode}}",
+					"host": [
+						"{{Domain}}"
+					],
+					"path": [
+						"api",
+						"users",
+						"{{CollectionCode}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Single User Not Found",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{Domain}}/api/users/23",
+					"host": [
+						"{{Domain}}"
+					],
+					"path": [
+						"api",
+						"users",
+						"23"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List Resources",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{Domain}}/api/unknown",
+					"host": [
+						"{{Domain}}"
+					],
+					"path": [
+						"api",
+						"unknown"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Single Resource",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{Domain}}/api/unknown/2",
+					"host": [
+						"{{Domain}}"
+					],
+					"path": [
+						"api",
+						"unknown",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Single Resource Not Found",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{Domain}}/api/unknown/23",
+					"host": [
+						"{{Domain}}"
+					],
+					"path": [
+						"api",
+						"unknown",
+						"23"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create User",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"morpheus\",\r\n    \"job\": \"leader\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{Domain}}/api/users",
+					"host": [
+						"{{Domain}}"
+					],
+					"path": [
+						"api",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Put User",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"morpheus\",\r\n    \"job\": \"zion resident\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{Domain}}/api/users/2",
+					"host": [
+						"{{Domain}}"
+					],
+					"path": [
+						"api",
+						"users",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Patch User",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"morpheus\",\r\n    \"job\": \"zion resident\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{Domain}}/api/users/2",
+					"host": [
+						"{{Domain}}"
+					],
+					"path": [
+						"api",
+						"users",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete User",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{Domain}}/api/users/2",
+					"host": [
+						"{{Domain}}"
+					],
+					"path": [
+						"api",
+						"users",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": " Delayed response",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{Domain}}/api/users?delay=3",
+					"host": [
+						"{{Domain}}"
+					],
+					"path": [
+						"api",
+						"users"
+					],
+					"query": [
+						{
+							"key": "delay",
+							"value": "3"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					"pm.collectionVariables.set(\"CollectionCode\",\"2\");\r",
+					"pm.environment.set(\"env scope variable\",\"Qa var\");\r",
+					"pm.globals.set(\"globalvar\",\"testing var\");"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "CollectionCode",
+			"value": ""
+		}
+	]
+}

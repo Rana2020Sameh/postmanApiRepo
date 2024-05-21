@@ -1,0 +1,120 @@
+{
+	"info": {
+		"_postman_id": "33aeed56-5b35-48d8-ad93-f6231aee7fe5",
+		"name": "DataDriven",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "13262524",
+		"_collection_link": "https://speeding-desert-88730.postman.co/workspace/QA-Team~7e012b3f-47b7-44ee-882f-8ae6abab8017/collection/13262524-33aeed56-5b35-48d8-ad93-f6231aee7fe5?action=share&source=collection_link&creator=13262524"
+	},
+	"item": [
+		{
+			"name": "Register using paramitarize the variables",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.setNextRequest(null);\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"{{email_value}}\",\r\n    \"password\": \"{{pass_value}}\"\r\n}\r\n\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://reqres.in/api/register",
+					"protocol": "https",
+					"host": [
+						"reqres",
+						"in"
+					],
+					"path": [
+						"api",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login successfully Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"console.log(pm.globals.get(\"loginVar\"));\r",
+							"console.log(pm.globals.get(\"global var\"));\r",
+							"\r",
+							"pm.globals.unset(\"globalvar\");\r",
+							"pm.variables.unset(\"loginVar\");\r",
+							"pm.environment.unset(\"env scope variable\");\r",
+							"\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.globals.set(\"loginVar\",\"login\");"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"eve.holt@reqres.in\",\r\n    \"password\": \"cityslicka\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{Domain}}/api/{{loginVar}}",
+					"host": [
+						"{{Domain}}"
+					],
+					"path": [
+						"api",
+						"{{loginVar}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
